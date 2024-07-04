@@ -48,6 +48,8 @@ export default {
       axios.post(process.env.VUE_APP_MUSIC_API_URL + '/spotify/recommendTrackList', {
         artistsId: this.trackInfo.artists_id,
         trackId: this.trackInfo.track_id,
+        artistsName: this.trackInfo.artists,
+        trackTitle: this.trackInfo.track,
         market: this.internalCountryCode,
         limit: 10
      }).then(response => {
