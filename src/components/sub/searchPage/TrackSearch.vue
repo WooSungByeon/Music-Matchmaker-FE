@@ -61,6 +61,7 @@ export default {
        }).then(response => {
           this.trackList = response.data;
        }).catch(error => {
+         alert("An error has occurred. Please use it again later.")
           console.error(error);
        });
       }

@@ -57,13 +57,11 @@ export default {
           thumbnailsLink: item.thumbnailsLink
         }));
      }).catch(error => {
+        alert("An error has occurred. Please use it again later.")
+        this.$emit('close');
         console.error(error);
      });
     },
   }
 };
 </script>
-
-<style scoped>
-
-</style>
