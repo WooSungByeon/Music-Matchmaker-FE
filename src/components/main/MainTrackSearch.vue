@@ -20,6 +20,9 @@ export default {
       selectedCountryCode: ''
     };
   },
+  mounted() {
+    document.body.style.backgroundColor = '#f5f5f5';
+  },
   methods: {
     handleCountrySelected(countryCode) {
       this.selectedCountryCode = countryCode;
