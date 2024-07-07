@@ -1,19 +1,22 @@
 <template>
-  <div class="datalist-container">
-    <div class="datalist-input" @focusout="onBlur" tabindex="0">
-      <input type="text" v-model="searchWord" @focus="onInput" @input="handleInput" placeholder="Search for a song">
+
+  <div class="col-md-offset-1">
+    <!-- Track Search Input -->
+    <div class="form-group" @focusout="onBlur" tabindex="0">
+      <input type="text" class="form-control search-input" v-model="searchWord" @focus="onInput" @input="handleInput" placeholder="Search for a song">
     </div>
 
-    <div v-if="showDropdown" class="datalist-results">
+    <!-- Track Item List -->
+    <div v-if="showDropdown" class="datalist-results scrollbar_style1">
       <div v-for="(item) in trackList" :key="item.track_id" class="datalist-item" @click="goToSearchResults(item)">
         <img :src="item.track_img" :alt="item.track">
-          <div class="item-text">
-            {{ item.track }}
-            <div class="item-subtext">{{ item.artists }}</div>
-          </div>
+        <div class="item-text">
+          {{ item.track }}
+          <div class="item-subtext">{{ item.artists }}</div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>

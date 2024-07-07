@@ -1,20 +1,17 @@
 <template>
-  <div class="coutry-select">
-      <div class="selected" @click="toggleDropdown">
-        <img :src="selectedCountry.flag" :alt="selectedCountry.name" />
-        <i class="arrow"></i>
-      </div>
-      <div v-if="dropdownOpen" class="dropdown">
-        <div
-          v-for="country in countries"
-          :key="country.code"
-          class="dropdown-item"
-          @click="selectCountry(country)"
-        >
-          <img :src="country.flag" :alt="country.name" />
-        </div>
+
+  <div class="country-select form-control" @click="toggleDropdown">
+    <div class="selected" >
+      <img :src="selectedCountry.flag" :alt="selectedCountry.name" />
+      <i class="arrow"></i>
+    </div>
+    <div class="dropdown-list" v-if="dropdownOpen">
+      <div class="dropdown-item" @click="selectCountry(country)"  v-for="country in countries"  :key="country.code">
+        <img :src="country.flag" :alt="country.name" />
       </div>
     </div>
+  </div>
+
 </template>
 
 <script>
@@ -39,7 +36,6 @@ export default {
     },
     selectCountry(country) {
       this.selectedCountry = country;
-      this.dropdownOpen = false;
       this.$emit('country-selected', country.code);
     }
   }

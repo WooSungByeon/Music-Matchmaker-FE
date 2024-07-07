@@ -1,7 +1,21 @@
 <template>
-  <div class="main-container">
-    <CountrySelect @country-selected="handleCountrySelected" />
-    <TrackSearch ref="trackSearch" :countryCode="selectedCountryCode" />
+  <div class="page">
+    <div class="fh5co-cover">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="col-md-8 col-md-offset-2 text-center">
+          <div class="display-t">
+            <div class="display-tc" >
+              <h1>Enter your favorite song</h1>
+              <div class="container-box form-inline fh5co-header-subscribe" >
+                <CountrySelect @country-selected="handleCountrySelected" />
+                <TrackSearch ref="trackSearch" :countryCode="selectedCountryCode" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,6 +47,9 @@ export default {
 </script>
 
 <style>
-@import "../../../src/assets/css/main_v1.css";
-
+@import "../../assets/css/search.css";
+@import "../../../src/assets/css/animate.css";
+@import "../../../src/assets/css/icomoon.css";
+@import "../../../src/assets/css/bootstrap.css";
+@import "../../../src/assets/css/style.css";
 </style>

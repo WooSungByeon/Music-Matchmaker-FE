@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+  <div class="u-body u-xl-mode">
     <RecommendTrackList @open-youtube="openYoutubeListPopup"/>
     <ListPoup v-if="showPopupYn" :searchWord="searchWord" @close="closeYoutubeListPopup"/>
   </div>
@@ -36,6 +36,9 @@ export default {
 </script>
 
 <style>
-@import "../../../src/assets/css/main_v1.css";
+@import "https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i";
+@import "https://fonts.googleapis.com/css?family=Gloria+Hallelujah:400";
+@import "../../assets/css/list.css";
+@import "../../assets/css/nicepage.css";
 
 </style>

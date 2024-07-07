@@ -1,31 +1,33 @@
 <template>
-  <div class="search-results">
-    <h1>검색 결과</h1>
-    <ul>
-      <li v-for="(result, index) in results" :key="index" class="track-item">
-        <img :src="result.track_img" alt="앨범 커버" class="track-img" />
-        <div class="track-info">
-          <h2>{{ result.track }}</h2>
-          <p>{{ result.artists }}</p>
-          <div class="track-buttons">
-              <a :href="result.track_url" target="_blank">
-                <button class="spotify-button">
-                  <font-awesome-icon icon="fa-brands fa-spotify" />
-                  Spotify
-                </button>
+  <section class="u-clearfix u-section-1">
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <h1 class="u-align-center u-custom-font u-text u-text-default u-text-1">search result</h1>
+    </div>
+  </section>
+  <section class="u-clearfix u-grey-10 u-section-2" >
+    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+      <div class="u-expanded-width u-list u-list-1">
+        <div class="u-repeater u-repeater-1">
+          <div class="u-container-style u-list-item u-repeater-item u-video-cover u-white" v-for="(result, index) in results" :key="index">
+            <div class="u-container-layout u-similar-container u-container-layout-1">
+              <h3 class="u-text u-text-default u-text-1">{{ result.track }}</h3>
+              <div class="u-border-4 u-border-palette-3-base u-expanded-width u-line u-line-horizontal u-line-1"></div>
+              <img class="u-expanded-width u-image u-image-default u-image-1"
+                   data-image-width="2000" data-image-height="1333" :src="result.track_img" alt="album cover">
+              <p class="u-text u-text-default u-text-2">{{ result.artists }}</p>
+              <a :href="result.track_url" target="_blank" class="u-btn u-button-style u-custom-color-1 u-btn-1">
+                <font-awesome-icon icon="fa-brands fa-spotify" /> Spotify
               </a>
-              <button class="youtube-button" @click="openYouTube(result.track, result.artists)">
-                <font-awesome-icon icon="fa-brands fa-youtube" />
-                YouTube
-              </button>
+              <a @click="openYouTube(result.track, result.artists)" class="u-border-none u-btn u-button-style u-palette-2-base u-btn-2">
+                <font-awesome-icon icon="fa-brands fa-youtube" /> Youtube
+              </a>
             </div>
           </div>
-      </li>
-    </ul>
-    <div>
-      <button class="back-button" @click="goSearchPage">돌아가기</button>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
 </template>
 
 <script>
@@ -51,7 +53,7 @@ export default {
         artistsName: this.trackInfo.artists,
         trackTitle: this.trackInfo.track,
         market: this.internalCountryCode,
-        limit: 10
+        limit: 8
      }).then(response => {
         this.results = response.data;
      }).catch(error => {
@@ -69,30 +71,3 @@ export default {
   }
 };
 </script>
-
-<style>
-
-.back-button {
-    padding: 15px 30px;
-    font-size: 16px;
-    color: white;
-    background: linear-gradient(135deg, #6b8ce3, #1e3c72);
-    border: none;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.back-button:hover {
-    background: linear-gradient(135deg, #1e3c72, #6b8ce3);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-.back-button:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-</style>
