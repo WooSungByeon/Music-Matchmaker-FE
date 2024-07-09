@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainTrackSearch from '../components/main/MainTrackSearch.vue';
-import MainRecommendTrackList from '../components/main/MainRecommendTrackList.vue';
 import NotFound from '../components/main/NotFound.vue';
 
 const routes = [
@@ -12,11 +11,6 @@ const routes = [
     path: '/music-match/',
     name: 'Home',
     component: MainTrackSearch
-  },
-  {
-    path: '/music-match/result',
-    name: 'MainRecommendTrackList',
-    component: MainRecommendTrackList,
   },
   {
      path: "/notFound",
