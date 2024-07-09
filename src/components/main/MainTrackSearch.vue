@@ -24,8 +24,8 @@
       </div>
 
       <!-- content result -->
-      <div class="content" v-if="showRecommendList">
-        <RecommendContent @youtubeSearchWord="openYoutubePopup" :parentCountryCode="this.countryCode" :parentTrackInfo="this.trackInfo" />
+      <div class="content">
+        <RecommendContent v-if="showRecommendList" @youtubeSearchWord="openYoutubePopup" :parentCountryCode="this.countryCode" :parentTrackInfo="this.trackInfo" />
       </div>
     </div>
 
@@ -59,12 +59,19 @@ export default {
   },
   methods: {
     changeSelectedTrack(trackInfo) {
-      this.showRecommendList = true;
+      this.showRecommendList = false;
       this.trackInfo = trackInfo;
+      setTimeout(() => {
+        this.showRecommendList = true;
+      }, 0);
       this.showTrackInfo = true;
     },
     changeSelectedCountry(countryCode) {
+      this.showRecommendList = false;
       this.countryCode = countryCode;
+      setTimeout(() => {
+        this.showRecommendList = true;
+      }, 0);
     },
     openYoutubePopup(youtubeSearchWord) {
       this.youtubeSearchWord = youtubeSearchWord;

@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     recommendTrackSearchResults() {
+      this.results = [];
       this.isLoading = true;
       axios.post(process.env.VUE_APP_MUSIC_API_URL + '/spotify/recommendTrackList', {
         artistsId: this.trackInfo.artist_id,
