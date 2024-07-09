@@ -1,55 +1,82 @@
 <template>
-  <div class="page">
-    <div class="fh5co-cover">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="col-md-8 col-md-offset-2 text-center">
-          <div class="display-t">
-            <div class="display-tc" >
-              <h1>Enter your favorite song</h1>
-              <div class="container-box form-inline fh5co-header-subscribe" >
-                <CountrySelect @country-selected="handleCountrySelected" />
-                <TrackSearch ref="trackSearch" :countryCode="selectedCountryCode" />
-              </div>
+  <div class="container">
+    <!-- side container -->
+    <div class="sidebar">
+      <div class="logo">
+        <h1>MusicMatcher</h1>
+      </div>
+      <ul v-if="showTrackInfo" class="playlist">
+        <li>
+            <img :src="trackInfo.track_img" alt="../../assets/image/no_image.png">
+            <div class="song-info">
+                <p class="song-title">{{ trackInfo.track }}</p>
+                <p class="artist">{{ trackInfo.artist }}</p>
             </div>
-          </div>
-        </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- main container -->
+    <div class="main-view">
+      <!-- header -->
+      <div class="header">
+          <SearchHeader @trackInfo="changeSelectedTrack" @countryCode="changeSelectedCountry" />
+      </div>
+
+      <!-- content result -->
+      <div class="content" v-if="showRecommendList">
+        <RecommendContent @youtubeSearchWord="openYoutubePopup" :parentCountryCode="this.countryCode" :parentTrackInfo="this.trackInfo" />
       </div>
     </div>
+
+    <!-- popup list -->
+    <YoutubePopupList v-if="showPopupYn" :parentYoutubeSearchWord="this.youtubeSearchWord" @close="closeYoutubeListPopup"/>
   </div>
+
 </template>
 
 <script>
-import CountrySelect from '../sub/searchPage/CountrySelect.vue'
-import TrackSearch from '../sub/searchPage/TrackSearch.vue'
+import SearchHeader from '../sub/SearchHeader.vue';
+import RecommendContent from '../sub/RecommendContent.vue';
+import YoutubePopupList from '../sub/popup/YoutubePopupList.vue';
 
 export default {
   name: 'MainContainer',
   components: {
-    CountrySelect
-    , TrackSearch
+    SearchHeader,
+    RecommendContent,
+    YoutubePopupList
   },
   data() {
     return {
-      selectedCountryCode: ''
+      trackInfo : ''
+      , showRecommendList : false
+      , countryCode : 'KR'
+      , showTrackInfo : false
+      , youtubeSearchWord : ''
+      , showPopupYn : false
     };
   },
-  mounted() {
-    document.body.style.backgroundColor = '#f5f5f5';
-  },
   methods: {
-    handleCountrySelected(countryCode) {
-      this.selectedCountryCode = countryCode;
-      this.$refs.trackSearch.trackOptions();
+    changeSelectedTrack(trackInfo) {
+      this.showRecommendList = true;
+      this.trackInfo = trackInfo;
+      this.showTrackInfo = true;
+    },
+    changeSelectedCountry(countryCode) {
+      this.countryCode = countryCode;
+    },
+    openYoutubePopup(youtubeSearchWord) {
+      this.youtubeSearchWord = youtubeSearchWord;
+      this.showPopupYn = true;
+    },
+    closeYoutubeListPopup() {
+      this.showPopupYn = false;
     }
   }
 }
 </script>
 
 <style>
-@import "../../assets/css/search.css";
-@import "../../../src/assets/css/animate.css";
-@import "../../../src/assets/css/icomoon.css";
-@import "../../../src/assets/css/bootstrap.css";
-@import "../../../src/assets/css/style.css";
+@import "../../assets/css/main.css";
 </style>
