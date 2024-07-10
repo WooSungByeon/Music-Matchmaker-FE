@@ -22,6 +22,7 @@ export default {
   },
   mounted() {
     this.audio = new Audio(this.previewUrl);
+    this.audio.addEventListener('ended', this.endPreview);
   },
   beforeUnmount() {
     this.audio.pause();
@@ -35,6 +36,9 @@ export default {
       }
       this.isPlaying = !this.isPlaying;
     },
+    endPreview() {
+      this.isPlaying=false;
+    }
   }
 };
 </script>
