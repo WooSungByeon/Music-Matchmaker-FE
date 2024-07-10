@@ -12,6 +12,7 @@
             <p class="artist">{{ result.artist }}</p>
         </div>
         <div class="buttons">
+          <PreviewButton :preview-url="result.preview_url"/>
           <button class="spotify-btn" @click="openSpotify(result.track_url)">
             <font-awesome-icon icon="fa-brands fa-spotify" /> Spotify
           </button>
@@ -26,11 +27,15 @@
 
 <script>
 import axios from "axios";
+import PreviewButton from './PreviewButton.vue';
 
 export default {
   props: {
     parentCountryCode: { type: String,  required: true },
     parentTrackInfo: { type: Object, required: true },
+  },
+  components: {
+    PreviewButton
   },
   setup(props) {
     return {

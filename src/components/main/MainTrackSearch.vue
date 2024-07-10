@@ -20,7 +20,7 @@
     <div class="main-view">
       <!-- header -->
       <div class="header">
-          <SearchHeader @trackInfo="changeSelectedTrack" @countryCode="changeSelectedCountry" />
+          <SearchHeader @trackInfo="changeSelectedTrack" @countryCode="changeSelectedCountry" @refresh="refreshRecommendContent" />
       </div>
 
       <!-- content result -->
@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      trackInfo : ''
+      trackInfo : null
       , showRecommendList : false
       , countryCode : 'KR'
       , showTrackInfo : false
@@ -58,20 +58,22 @@ export default {
     };
   },
   methods: {
+    refreshRecommendContent() {
+      if(this.trackInfo != null) {
+        this.showRecommendList = false;
+        setTimeout(() => {
+          this.showRecommendList = true;
+        }, 0);
+      }
+    },
     changeSelectedTrack(trackInfo) {
-      this.showRecommendList = false;
       this.trackInfo = trackInfo;
-      setTimeout(() => {
-        this.showRecommendList = true;
-      }, 0);
+      this.refreshRecommendContent();
       this.showTrackInfo = true;
     },
     changeSelectedCountry(countryCode) {
-      this.showRecommendList = false;
       this.countryCode = countryCode;
-      setTimeout(() => {
-        this.showRecommendList = true;
-      }, 0);
+      this.refreshRecommendContent();
     },
     openYoutubePopup(youtubeSearchWord) {
       this.youtubeSearchWord = youtubeSearchWord;

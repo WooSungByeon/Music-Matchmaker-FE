@@ -23,6 +23,10 @@
       <option v-for="country in countries" :key="country.code" :value="country.code">{{country.name}}</option>
   </select>
 
+  <button class="refresh-button" @click="refreshList">
+    <font-awesome-icon icon="fa-solid fa-rotate-right" :class="{ 'fa-spin': isHover }"  @mouseover="isHover = true"  @mouseleave="isHover = false" />
+  </button>
+
 </template>
 
 <script>
@@ -34,6 +38,7 @@ export default {
   data() {
     return {
       searchWord: ''
+      , isHover : false
       , selected: null
       , trackList: []
       , showDropdown: false
@@ -77,6 +82,9 @@ export default {
     },
     selectCountry() {
       this.$emit('countryCode', this.selectedCountry);
+    },
+    refreshList() {
+      this.$emit('refresh', true);
     }
   },
 }
