@@ -1,25 +1,26 @@
 <template>
+  <div class="content">
+    <h2>Recommend List</h2>
+    <div class="albums">
+      <!-- loading -->
+      <div class="loading-spinner" v-if="isLoading"></div>
 
-  <h2>Recommend List</h2>
-  <div class="albums">
-    <!-- loading -->
-    <div class="loading-spinner" v-if="isLoading"></div>
-
-    <div class="album" v-for="(result, index) in results" :key="index">
-        <img :src="result.track_img" alt="../../assets/image/no_image.png">
-        <div class="song-info">
-            <p class="song-title">{{ result.track }}</p>
-            <p class="artist">{{ result.artist }}</p>
-        </div>
-        <div class="buttons">
-          <PreviewButton :preview-url="result.preview_url"/>
-          <button class="spotify-btn" @click="openSpotify(result.track_url)">
-            <font-awesome-icon icon="fa-brands fa-spotify" /> Spotify
-          </button>
-          <button class="youtube-btn" @click="openYouTube(result.track, result.artist)">
-              <font-awesome-icon icon="fa-brands fa-youtube" /> Youtube
+      <div class="album" v-for="(result, index) in results" :key="index">
+          <img :src="result.track_img" alt="../../assets/image/no_image.png">
+          <div class="song-info">
+              <p class="song-title">{{ result.track }}</p>
+              <p class="artist">{{ result.artist }}</p>
+          </div>
+          <div class="buttons">
+            <PreviewButton :preview-url="result.preview_url"/>
+            <button class="spotify-btn" @click="openSpotify(result.track_url)">
+              <font-awesome-icon icon="fa-brands fa-spotify" /> Spotify
             </button>
-        </div>
+            <button class="youtube-btn" @click="openYouTube(result.track, result.artist)">
+                <font-awesome-icon icon="fa-brands fa-youtube" /> Youtube
+              </button>
+          </div>
+      </div>
     </div>
   </div>
 

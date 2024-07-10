@@ -5,8 +5,12 @@
       <div class="logo">
         <h1>MusicMatcher</h1>
       </div>
-      <ul v-if="showTrackInfo" class="playlist">
-        <li>
+      <ul class="nav">
+          <li :class="{ 'selected': menuType === 'main' }" @click="moveMenu('main')">Home</li>
+          <li :class="{ 'selected': menuType === 'history' }" @click="moveMenu('history')">Search History</li>
+      </ul>
+      <ul class="playlist">
+        <li v-if="showTrackInfo">
             <img :src="trackInfo.track_img" alt="../../assets/image/no_image.png">
             <div class="song-info">
                 <p class="song-title">{{ trackInfo.track }}</p>
@@ -19,14 +23,13 @@
     <!-- main container -->
     <div class="main-view">
       <!-- header -->
-      <div class="header">
-          <SearchHeader @trackInfo="changeSelectedTrack" @countryCode="changeSelectedCountry" @refresh="refreshRecommendContent" />
-      </div>
+      <SearchHeader @trackInfo="changeSelectedTrack" @countryCode="changeSelectedCountry" @refresh="refreshRecommendContent" />
 
       <!-- content result -->
-      <div class="content">
-        <RecommendContent v-if="showRecommendList" @youtubeSearchWord="openYoutubePopup" :parentCountryCode="this.countryCode" :parentTrackInfo="this.trackInfo" />
-      </div>
+      <RecommendContent v-if="showRecommendList && menuType === 'main'" @youtubeSearchWord="openYoutubePopup" :parentCountryCode="this.countryCode" :parentTrackInfo="this.trackInfo" />
+
+      <!-- search History -->
+      <SearchHistoryContent v-if="menuType === 'history'" />
     </div>
 
     <!-- popup list -->
@@ -38,6 +41,7 @@
 <script>
 import SearchHeader from '../sub/SearchHeader.vue';
 import RecommendContent from '../sub/RecommendContent.vue';
+import SearchHistoryContent from '../sub/SearchHistoryContent.vue';
 import YoutubePopupList from '../sub/popup/YoutubePopupList.vue';
 
 export default {
@@ -45,6 +49,7 @@ export default {
   components: {
     SearchHeader,
     RecommendContent,
+    SearchHistoryContent,
     YoutubePopupList
   },
   data() {
@@ -55,11 +60,13 @@ export default {
       , showTrackInfo : false
       , youtubeSearchWord : ''
       , showPopupYn : false
+      , menuType : 'main'
     };
   },
   methods: {
     refreshRecommendContent() {
       if(this.trackInfo != null) {
+        this.menuType = "main";
         this.showRecommendList = false;
         setTimeout(() => {
           this.showRecommendList = true;
@@ -81,7 +88,10 @@ export default {
     },
     closeYoutubeListPopup() {
       this.showPopupYn = false;
-    }
+    },
+    moveMenu(menuId) {
+      this.menuType = menuId;
+    },
   }
 }
 </script>
