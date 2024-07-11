@@ -9,11 +9,11 @@
     <!-- Search results will be displayed here -->
     <div class="search-results">
       <ul v-if="showDropdown">
-        <li v-for="item in trackList" :key="item.track_id" class="datalist-item" @click="goToSearchResults(item)">
-          <img :src="item.track_img" :alt="item.track">
+        <li v-for="trackInfo in trackList" :key="trackInfo.track_id" class="datalist-item" @click="goToSearchResults(trackInfo)">
+          <img :src="trackInfo.track_img" :alt="trackInfo.track">
           <div class="song-info">
-            <p class="song-title">{{ item.track }}</p>
-            <p class="artist">{{ item.artist }}</p>
+            <p class="song-title">{{ trackInfo.track }}</p>
+            <p class="artist">{{ trackInfo.artist }}</p>
           </div>
         </li>
       </ul>
@@ -79,21 +79,12 @@ export default {
     goToSearchResults(trackInfo) {
       this.showDropdown = false;
       this.$emit('trackInfo', trackInfo);
-      this.saveSearchHistory(trackInfo);
     },
     selectCountry() {
       this.$emit('countryCode', this.selectedCountry);
     },
     refreshList() {
       this.$emit('refresh');
-    },
-    saveSearchHistory(trackInfo) {
-      let searchHistory = localStorage.getItem('searchHistory');
-
-      searchHistory = searchHistory != null ? JSON.parse(searchHistory) : [];
-
-      searchHistory.unshift(JSON.parse(JSON.stringify(trackInfo)));
-      localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
     }
   },
 }

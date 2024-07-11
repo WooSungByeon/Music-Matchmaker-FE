@@ -7,11 +7,14 @@
       </button>
     </div>
     <div class="albums">
-      <div class="album" v-for="(result, index) in results" :key="index">
-          <img :src="result.track_img" alt="../../assets/image/no_image.png">
+      <div v-if="results.length < 1" class="no-items">
+          <p>No search history</p>
+      </div>
+      <div class="album" v-for="(trackInfo, index) in results" :key="index">
+          <img :src="trackInfo.track_img" alt="../../assets/image/no_image.png">
           <div class="song-info">
-              <p class="song-title">{{ result.track }}</p>
-              <p class="artist">{{ result.artist }}</p>
+              <p class="song-title">{{ trackInfo.track }}</p>
+              <p class="artist">{{ trackInfo.artist }}</p>
           </div>
       </div>
     </div>

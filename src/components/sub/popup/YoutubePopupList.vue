@@ -5,10 +5,10 @@
       <span class="close-btn" @click="$emit('close')">&times;</span>
       <h2 class="popup-title">YouTube Videos</h2>
       <ul class="youtube-list">
-        <li v-for="item in youtubeList" :key="item.videoLink">
-          <img :src="item.thumbnailsLink" :alt="item.title">
+        <li v-for="youtubeInfo in youtubeList" :key="youtubeInfo.videoLink">
+          <img :src="youtubeInfo.thumbnailsLink" :alt="youtubeInfo.title">
           <div class="video-info">
-            <a :href="item.videoLink" target='_blank' class="video-title">{{ item.title }}</a>
+            <a :href="youtubeInfo.videoLink" target='_blank' class="video-title">{{ youtubeInfo.title }}</a>
           </div>
         </li>
       </ul>

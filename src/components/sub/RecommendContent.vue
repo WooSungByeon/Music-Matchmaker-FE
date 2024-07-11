@@ -5,7 +5,7 @@
       <!-- loading -->
       <div class="loading-spinner" v-if="isLoading"></div>
       <!-- list -->
-      <div class="album" v-for="trackInfo in results" :key="trackInfo.track">
+      <div class="album" v-for="(trackInfo, index) in results" :key="index">
           <img :src="trackInfo.track_img" alt="../../assets/image/no_image.png">
           <div class="song-info">
               <p class="song-title">{{ trackInfo.track }}</p>
@@ -52,6 +52,7 @@ export default {
           market: countryCode,
           limit: 10
        }).then(response => {
+          this.saveSearchHistory(trackInfo);
           this.isLoading = false;
           this.results = response.data;
         }).catch(error => {
@@ -66,6 +67,14 @@ export default {
     openYouTube(track, artists) {
       const searchWord = track + " " + artists;
       this.$emit('youtubeSearchWord', searchWord);
+    },
+    saveSearchHistory(trackInfo) {
+      let searchHistory = localStorage.getItem('searchHistory');
+
+      searchHistory = searchHistory != null ? JSON.parse(searchHistory) : [];
+
+      searchHistory.unshift(JSON.parse(JSON.stringify(trackInfo)));
+      localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
     }
   }
 };
