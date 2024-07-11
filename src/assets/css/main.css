@@ -162,20 +162,20 @@
 }
 
 /* Webkit 기반 브라우저 스크롤바 스타일링 */
-.search-results::-webkit-scrollbar {
+.content::-webkit-scrollbar, .search-results::-webkit-scrollbar {
     width: 10px; /* 스크롤바 너비 */
 }
 
-.search-results::-webkit-scrollbar-track {
+.content::-webkit-scrollbar-track, .search-results::-webkit-scrollbar-track {
     background: #f1f1f1; /* 스크롤바 track 배경색 */
 }
 
-.search-results::-webkit-scrollbar-thumb {
+.content::-webkit-scrollbar-thumb, .search-results::-webkit-scrollbar-thumb {
     background: #888; /* 스크롤바 thumb 배경색 */
     border-radius: 5px; /* 스크롤바 thumb의 둥근 모서리 */
 }
 
-.search-results::-webkit-scrollbar-thumb:hover {
+.content::-webkit-scrollbar-thumb:hover, .search-results::-webkit-scrollbar-thumb:hover {
     background: #555; /* 마우스를 올렸을 때의 스크롤바 thumb 배경색 */
 }
 
@@ -407,4 +407,20 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical
+}
+
+.trash-button {
+    height: 35px;
+    padding: 10px;
+    border-radius: 2px;
+    border: none;
+    background-color: #ff5555;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.trash-button:hover {
+    background-color: #ff2222;
 }

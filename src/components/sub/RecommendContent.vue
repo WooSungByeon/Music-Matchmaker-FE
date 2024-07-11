@@ -4,19 +4,19 @@
     <div class="albums">
       <!-- loading -->
       <div class="loading-spinner" v-if="isLoading"></div>
-
-      <div class="album" v-for="(result, index) in results" :key="index">
-          <img :src="result.track_img" alt="../../assets/image/no_image.png">
+      <!-- list -->
+      <div class="album" v-for="trackInfo in results" :key="trackInfo.track">
+          <img :src="trackInfo.track_img" alt="../../assets/image/no_image.png">
           <div class="song-info">
-              <p class="song-title">{{ result.track }}</p>
-              <p class="artist">{{ result.artist }}</p>
+              <p class="song-title">{{ trackInfo.track }}</p>
+              <p class="artist">{{ trackInfo.artist }}</p>
           </div>
           <div class="buttons">
-            <PreviewButton :preview-url="result.preview_url"/>
-            <button class="spotify-btn" @click="openSpotify(result.track_url)">
+            <PreviewButton :preview-url="trackInfo.preview_url"/>
+            <button class="spotify-btn" @click="openSpotify(trackInfo.track_url)">
               <font-awesome-icon icon="fa-brands fa-spotify" /> Spotify
             </button>
-            <button class="youtube-btn" @click="openYouTube(result.track, result.artist)">
+            <button class="youtube-btn" @click="openYouTube(trackInfo.track, trackInfo.artist)">
                 <font-awesome-icon icon="fa-brands fa-youtube" /> Youtube
               </button>
           </div>
@@ -31,18 +31,8 @@ import axios from "axios";
 import PreviewButton from './PreviewButton.vue';
 
 export default {
-  props: {
-    parentCountryCode: { type: String,  required: true },
-    parentTrackInfo: { type: Object, required: true },
-  },
   components: {
     PreviewButton
-  },
-  setup(props) {
-    return {
-      countryCode: props.parentCountryCode
-      , trackInfo : props.parentTrackInfo
-    };
   },
   data() {
     return {
@@ -50,27 +40,25 @@ export default {
       isLoading : false
     };
   },
-  mounted() {
-    this.recommendTrackSearchResults();
-  },
   methods: {
-    recommendTrackSearchResults() {
-      this.results = [];
-      this.isLoading = true;
-      axios.post(process.env.VUE_APP_MUSIC_API_URL + '/spotify/recommendTrackList', {
-        artistsId: this.trackInfo.artist_id,
-        trackId: this.trackInfo.track_id,
-        artistsName: this.trackInfo.artist,
-        trackTitle: this.trackInfo.track,
-        market: this.countryCode,
-        limit: 10
-     }).then(response => {
-        this.isLoading = false;
-        this.results = response.data;
-     }).catch(error => {
-        alert("An error has occurred. Please use it again later.")
-        console.error(error);
-     });
+    recommendTrackSearchResults(trackInfo, countryCode) {
+      if(trackInfo != null) {
+        this.isLoading = true;
+        axios.post(process.env.VUE_APP_MUSIC_API_URL + '/spotify/recommendTrackList', {
+          artistsId: trackInfo.artist_id,
+          trackId: trackInfo.track_id,
+          artistsName: trackInfo.artist,
+          trackTitle: trackInfo.track,
+          market: countryCode,
+          limit: 10
+       }).then(response => {
+          this.isLoading = false;
+          this.results = response.data;
+        }).catch(error => {
+          alert("An error has occurred. Please use it again later.")
+          console.error(error);
+        });
+      }
     },
     openSpotify(url) {
       window.open(url, "_blank");
