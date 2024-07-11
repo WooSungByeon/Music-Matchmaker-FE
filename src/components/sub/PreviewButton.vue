@@ -21,11 +21,15 @@ export default {
     };
   },
   mounted() {
-    this.audio = new Audio(this.previewUrl);
-    this.audio.addEventListener('ended', this.endPreview);
+    if(this.previewUrl !== 'null') {
+      this.audio = new Audio(this.previewUrl);
+      this.audio.addEventListener('ended', this.endPreview);
+    }
   },
   beforeUnmount() {
-    this.audio.pause();
+    if(this.audio != null) {
+      this.audio.pause();
+    }
   },
   methods: {
     openPreview() {

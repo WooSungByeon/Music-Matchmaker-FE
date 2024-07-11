@@ -17,6 +17,7 @@
     "core-js": "^3.8.3",
     "debounce": "^2.1.0",
     "lodash": "^4.17.21",
+    "sweetalert2": "^11.12.2",
     "vue": "^3.2.13",
     "vue-router": "^4.4.0"
   },

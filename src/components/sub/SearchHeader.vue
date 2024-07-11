@@ -9,7 +9,7 @@
     <!-- Search results will be displayed here -->
     <div class="search-results">
       <ul v-if="showDropdown">
-        <li v-for="(item) in trackList" :key="item.track_id" class="datalist-item" @click="goToSearchResults(item)">
+        <li v-for="item in trackList" :key="item.track_id" class="datalist-item" @click="goToSearchResults(item)">
           <img :src="item.track_img" :alt="item.track">
           <div class="song-info">
             <p class="song-title">{{ item.track }}</p>
@@ -23,8 +23,8 @@
         <option v-for="country in countries" :key="country.code" :value="country.code">{{country.name}}</option>
     </select>
 
-    <button class="refresh-button" @click="refreshList">
-      <font-awesome-icon icon="fa-solid fa-rotate-right" :class="{ 'fa-spin': isHover }"  @mouseover="isHover = true"  @mouseleave="isHover = false" />
+    <button class="refresh-button" @click="refreshList" @mouseover="isHover = true"  @mouseleave="isHover = false" >
+      <font-awesome-icon icon="fa-solid fa-rotate-right" :class="{ 'fa-spin': isHover }" />
     </button>
   </div>
 </template>

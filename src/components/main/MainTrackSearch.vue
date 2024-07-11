@@ -26,14 +26,20 @@
       <SearchHeader @trackInfo="changeSelectedTrack" @countryCode="changeSelectedCountry" @refresh="refreshRecommendContent" />
 
       <!-- content result -->
-      <RecommendContent v-if="showRecommendList && menuType === 'main'" @youtubeSearchWord="openYoutubePopup" :parentCountryCode="this.countryCode" :parentTrackInfo="this.trackInfo" />
+      <RecommendContent v-show="showRecommendList && menuType === 'main'"
+                        @youtubeSearchWord="openYoutubePopup"
+                        ref="recommendContent"
+      />
 
       <!-- search History -->
       <SearchHistoryContent v-if="menuType === 'history'" />
     </div>
 
     <!-- popup list -->
-    <YoutubePopupList v-if="showPopupYn" :parentYoutubeSearchWord="this.youtubeSearchWord" @close="closeYoutubeListPopup"/>
+    <YoutubePopupList v-if="showPopupYn"
+                      :parentYoutubeSearchWord="this.youtubeSearchWord"
+                      @close="closeYoutubeListPopup"
+    />
   </div>
 
 </template>
@@ -66,17 +72,15 @@ export default {
   methods: {
     refreshRecommendContent() {
       if(this.trackInfo != null) {
+        this.showTrackInfo = true;
         this.menuType = "main";
-        this.showRecommendList = false;
-        setTimeout(() => {
-          this.showRecommendList = true;
-        }, 0);
+        this.$refs.recommendContent.recommendTrackSearchResults(this.trackInfo, this.countryCode);
+        this.showRecommendList = true;
       }
     },
     changeSelectedTrack(trackInfo) {
       this.trackInfo = trackInfo;
       this.refreshRecommendContent();
-      this.showTrackInfo = true;
     },
     changeSelectedCountry(countryCode) {
       this.countryCode = countryCode;

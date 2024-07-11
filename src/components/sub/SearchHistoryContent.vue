@@ -1,10 +1,12 @@
 <template>
   <div class="content">
-    <h2>Search History List</h2>
+    <div style="display: flex">
+      <h2 style="flex-basis: 100%">Search History List</h2>
+      <button class="trash-button" @click="deleteLocalHistory">
+        <font-awesome-icon icon="fa-solid fa-trash" />
+      </button>
+    </div>
     <div class="albums">
-      <!-- loading -->
-      <div class="loading-spinner" v-if="isLoading"></div>
-
       <div class="album" v-for="(result, index) in results" :key="index">
           <img :src="result.track_img" alt="../../assets/image/no_image.png">
           <div class="song-info">
@@ -18,21 +20,42 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default {
   data() {
     return {
       results: [],
-      isLoading : false
     };
   },
   mounted() {
-    this.isLoading = true;
     const searchHistory = localStorage.getItem('searchHistory');
     this.results = searchHistory != null ? JSON.parse(searchHistory) : [];
-    this.isLoading = false;
   },
   methods: {
+    deleteLocalHistory() {
+      Swal.fire({
+        title: 'Do you want to delete your search history?',
+        text: "This action cannot be undone!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Search history has been deleted.',
+            '',
+            'success'
+          )
+          localStorage.removeItem('searchHistory');
+          this.results = [];
+        }
+      })
+
+    }
   }
 };
 </script>
