@@ -444,3 +444,10 @@
     font-size: 30px;
     margin: 0;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 20px auto;
+    gap: 5px;
+}

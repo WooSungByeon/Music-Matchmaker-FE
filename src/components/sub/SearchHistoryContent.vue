@@ -19,24 +19,44 @@
       </div>
     </div>
   </div>
-
+  <div class="pagination">
+    <v-pagination v-model="pageNumber" active-color="#DCEDFF"  :pages="totalPage" :range-size="1" @update:model-value="movePage" />
+  </div>
 </template>
 
 <script>
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import VPagination from "@hennge/vue3-pagination";
+import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 
 export default {
+  components: {
+    VPagination
+  },
   data() {
     return {
+      tempResult: [],
       results: [],
+      pageNumber: 1,
+      pageSize: 10,
+      totalPage : 1
     };
   },
   mounted() {
     const searchHistory = localStorage.getItem('searchHistory');
-    this.results = searchHistory != null ? JSON.parse(searchHistory) : [];
+    this.tempResult = searchHistory != null ? JSON.parse(searchHistory) : [];
+    this.results = this.tempResult.slice(0, this.pageSize);
+
+    this.totalPage = Math.ceil((this.tempResult.length / this.pageSize));
   },
   methods: {
+    movePage() {
+      const startIndex = (this.pageNumber - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      this.results = this.tempResult;
+      this.results = this.results.slice(startIndex, endIndex)
+    },
     deleteLocalHistory() {
       Swal.fire({
         title: 'Do you want to delete your search history?',
